@@ -101,6 +101,7 @@ hr { border: none; border-top: 1px solid #e5e7eb; margin: 1.5rem 0; }
 @st.cache_data(show_spinner="Memuat data...")
 def load_data():
     df = pd.read_parquet("climate_data_clean.parquet")
+    df["date"] = pd.to_datetime(df["date"])
     df = df[df["province_name"] == "Jawa Timur"].copy()
     df = df.sort_values(["station_id", "date"]).reset_index(drop=True)
     df["rain"] = (df["RR"] > 0).astype(int)
